@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FriendCell" rowHeight="181" id="DFl-3W-tgd" customClass="FriendMessageCell" customModule="MapChatApp" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="430" height="72"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="DFl-3W-tgd" id="bfI-CH-RPd">
+                <rect key="frame" x="0.0" y="0.0" width="430" height="72"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VT0-dh-cpn">
+                        <rect key="frame" x="10" y="10" width="50" height="50"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="50" id="8rj-B9-NMb"/>
+                            <constraint firstAttribute="width" constant="50" id="ORe-40-1dU"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="friendUserName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Unw-OK-l3M">
+                        <rect key="frame" x="70" y="10" width="100" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="Rf0-BD-4Yp"/>
+                            <constraint firstAttribute="width" constant="100" id="h5j-5R-OD6"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ここに相手のメッセージが入ります。" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gqw-UN-tEE" customClass="CustomLabel" customModule="MapChatApp" customModuleProvider="target">
+                        <rect key="frame" x="65" y="27" width="227" height="15"/>
+                        <color key="backgroundColor" systemColor="systemGray3Color"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="D9k-Or-RSG">
+                        <rect key="frame" x="295" y="30" width="85" height="12"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="0VE-7E-xyJ"/>
+                            <constraint firstAttribute="width" constant="85" id="Iec-kr-TGz"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="VT0-dh-cpn" firstAttribute="top" secondItem="bfI-CH-RPd" secondAttribute="top" constant="10" id="0v8-Q6-SQ7"/>
+                    <constraint firstItem="Unw-OK-l3M" firstAttribute="leading" secondItem="VT0-dh-cpn" secondAttribute="trailing" constant="10" id="8aA-5p-1ea"/>
+                    <constraint firstAttribute="bottom" secondItem="Gqw-UN-tEE" secondAttribute="bottom" constant="30" id="EKo-vb-jl0"/>
+                    <constraint firstItem="Unw-OK-l3M" firstAttribute="top" secondItem="bfI-CH-RPd" secondAttribute="top" constant="10" id="Llg-SM-EBp"/>
+                    <constraint firstAttribute="bottom" secondItem="D9k-Or-RSG" secondAttribute="bottom" constant="30" id="S3s-fh-0Wa"/>
+                    <constraint firstItem="Gqw-UN-tEE" firstAttribute="top" secondItem="Unw-OK-l3M" secondAttribute="bottom" constant="5" id="T0k-9T-MHM"/>
+                    <constraint firstItem="D9k-Or-RSG" firstAttribute="leading" secondItem="Gqw-UN-tEE" secondAttribute="trailing" constant="3" id="U6r-mA-V7M"/>
+                    <constraint firstAttribute="trailing" secondItem="D9k-Or-RSG" secondAttribute="trailing" constant="50" id="dZV-8a-ZWF"/>
+                    <constraint firstItem="Gqw-UN-tEE" firstAttribute="leading" secondItem="VT0-dh-cpn" secondAttribute="trailing" constant="5" id="pZh-eh-Qd2"/>
+                    <constraint firstItem="VT0-dh-cpn" firstAttribute="leading" secondItem="bfI-CH-RPd" secondAttribute="leading" constant="10" id="wae-h8-n6K"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="friendImageView" destination="VT0-dh-cpn" id="ExA-Yn-iTf"/>
+                <outlet property="friendTime" destination="D9k-Or-RSG" id="PhU-uz-Cmg"/>
+                <outlet property="friendUserName" destination="Unw-OK-l3M" id="uIb-Ty-9Q5"/>
+                <outlet property="friendsMessageLabel" destination="Gqw-UN-tEE" id="xEO-Ds-8cI"/>
+            </connections>
+            <point key="canvasLocation" x="-618.84057971014499" y="249.10714285714283"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemGray3Color">
+            <color red="0.7803921568627451" green="0.7803921568627451" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
