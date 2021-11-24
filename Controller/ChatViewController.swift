@@ -15,7 +15,7 @@ class ChatViewController: UIViewController {
     
     private lazy var inputTextView: InputTextView = {
         let view = InputTextView()
-        view.frame = .init(x: 0, y: 0, width: view.frame.width, height: 100)
+        view.frame = .init(x: 0, y: 0, width: view.frame.width, height: 200)
         view.delegate = self
         view.sendButton.setTitle("", for: .normal)
         return view
@@ -28,22 +28,33 @@ class ChatViewController: UIViewController {
     var roomName = String()
     let db = Firestore.firestore()
     var messages: [Message] = []
+    let screenSize = UIScreen.main.bounds.size
+    var offset: CGPoint?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationItem.title = roomName
+        self.navigationController?.navigationBar.backgroundColor = .systemGray4
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: self.tableView.frame.height))
+        let image = UIImage(named: "talkBackground")
+        imageView.image = image
+        imageView.alpha = 0.8
+        self.tableView.backgroundView = imageView
         userName = InfoManager.shared.userName
         userImageString = InfoManager.shared.imageString
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "Cell")
         tableView.register(UINib(nibName: "FriendMessageCell", bundle: nil), forCellReuseIdentifier: "FriendCell")
-        //self.navigationItem.title = roomName
         loadMessages(roomName: roomName)
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: inputTextView)
+        NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: inputTextView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //becomeFirstResponder()
+        becomeFirstResponder()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -63,6 +74,40 @@ class ChatViewController: UIViewController {
     override var canBecomeFirstResponder: Bool {
         return true
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
+    @objc func keyboardWillShow(_ notification:Notification){
+        let userInfo = notification.userInfo
+        let keyboardSize = (userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
+        let duration = userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
+        inputTextView.frame.origin.y = screenSize.height - keyboardSize.height - inputTextView.frame.height
+        
+        UIView.animate(withDuration: duration, animations: {
+            self.tableView.contentInset.bottom = keyboardSize.height
+        })
+        scrollToRowLastCell(animated: true)
+    }
+    
+    private func scrollToRowLastCell(animated: Bool) {
+        let numberOfRows = tableView.numberOfRows(inSection: 0)
+        guard numberOfRows > 0 else { return }
+        let lastCellIndexPath = IndexPath(item: numberOfRows - 1, section: 0)
+        tableView.scrollToRow(at: lastCellIndexPath, at: .bottom, animated: animated)
+    }
+    
+    @objc func keyboardWillHide(_ notification:NSNotification){
+        inputTextView.frame.origin.y = screenSize.height - inputTextView.frame.height
+        guard let duration = notification.userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval else { return }
+        UIView.animate(withDuration: duration) {
+            let transform = CGAffineTransform(translationX: 0, y: 0)
+            self.view.transform = transform
+        }
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+    }
+    
 }
 
 @available(iOS 15.0, *)
@@ -73,6 +118,7 @@ extension ChatViewController: InputTextViewDelegate {
         }
         inputTextView.removeText()
         tableView.reloadData()
+        inputTextView.chatTextView.resignFirstResponder()
     }
 }
 
@@ -116,6 +162,7 @@ extension ChatViewController: UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let maxSize = CGSize(width: self.view.frame.width - 100, height: CGFloat.greatestFiniteMagnitude)
         if messages != [] {
             let userInfo = messages[indexPath.row]
             if userInfo.sender == Auth.auth().currentUser?.email{
@@ -123,6 +170,8 @@ extension ChatViewController: UITableViewDelegate,UITableViewDataSource {
                 cell.myUserName.text = userInfo.userName
                 cell.messageText = userInfo.comment
                 cell.myTime.text = loadDate(postDate: userInfo.postDate)
+                cell.backgroundColor = UIColor.clear
+                cell.contentView.backgroundColor = UIColor.clear
                 if userInfo.imageString.isEmpty {
                     cell.myImageView.image = UIImage(named: "osaka")
                 } else {
@@ -136,6 +185,8 @@ extension ChatViewController: UITableViewDelegate,UITableViewDataSource {
                 friendCell.friendUserName.text = userInfo.userName
                 friendCell.friendMessageText = userInfo.comment
                 friendCell.friendTime.text = loadDate(postDate: userInfo.postDate)
+                friendCell.backgroundColor = UIColor.clear
+                friendCell.contentView.backgroundColor = UIColor.clear
                 if userInfo.imageString.isEmpty {
                     friendCell.friendImageView.image = UIImage(named: "osaka")
                 } else {
@@ -148,7 +199,7 @@ extension ChatViewController: UITableViewDelegate,UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! MessageCell
         return cell
     }
-
+    
     func loadDate(postDate: Double) -> String {
         let date = Date(timeIntervalSince1970: postDate)
         let formatter = DateFormatter()
