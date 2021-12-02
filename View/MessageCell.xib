@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19455" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19454"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -27,7 +27,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="ここにメッセージが入ります。" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QMc-Ij-ugf" customClass="CustomLabel" customModule="MapChatApp" customModuleProvider="target">
-                        <rect key="frame" x="138" y="27" width="187" height="18"/>
+                        <rect key="frame" x="125" y="27" width="200" height="18"/>
                         <color key="backgroundColor" red="0.88441444650000001" green="0.97165733580000002" blue="0.58912661669999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
@@ -41,7 +41,7 @@
                         </constraints>
                     </imageView>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FV9-UI-GDr">
-                        <rect key="frame" x="50" y="33" width="85" height="12"/>
+                        <rect key="frame" x="37" y="33" width="85" height="12"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="85" id="FwB-6Z-Qhj"/>
                             <constraint firstAttribute="height" constant="12" id="jog-bT-8Ym"/>
@@ -51,12 +51,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>
+                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                 <constraints>
                     <constraint firstItem="wAH-fw-RmB" firstAttribute="leading" secondItem="QMc-Ij-ugf" secondAttribute="trailing" constant="5" id="82p-fV-IMB"/>
                     <constraint firstItem="QMc-Ij-ugf" firstAttribute="top" secondItem="1wJ-nr-XiM" secondAttribute="bottom" constant="5" id="8bJ-j6-Sui"/>
                     <constraint firstAttribute="bottom" secondItem="FV9-UI-GDr" secondAttribute="bottom" constant="30" id="B47-6L-FSl"/>
-                    <constraint firstItem="FV9-UI-GDr" firstAttribute="leading" secondItem="lcf-GU-UtC" secondAttribute="leading" constant="50" id="BlJ-ME-Dh3"/>
                     <constraint firstItem="QMc-Ij-ugf" firstAttribute="leading" secondItem="FV9-UI-GDr" secondAttribute="trailing" constant="3" id="GmE-03-MEd"/>
+                    <constraint firstItem="FV9-UI-GDr" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="lcf-GU-UtC" secondAttribute="leading" constant="30" id="Npv-jd-ASo"/>
                     <constraint firstItem="wAH-fw-RmB" firstAttribute="leading" secondItem="1wJ-nr-XiM" secondAttribute="trailing" constant="5" id="WEx-zo-hxg"/>
                     <constraint firstItem="1wJ-nr-XiM" firstAttribute="top" secondItem="lcf-GU-UtC" secondAttribute="top" constant="10" id="b2N-ob-Bbb"/>
                     <constraint firstAttribute="trailing" secondItem="wAH-fw-RmB" secondAttribute="trailing" constant="10" id="c1V-Og-wPS"/>
