@@ -48,8 +48,10 @@ class ChatViewController: UIViewController {
         tableView.register(UINib(nibName: "MessageCell", bundle: nil), forCellReuseIdentifier: "Cell")
         tableView.register(UINib(nibName: "FriendMessageCell", bundle: nil), forCellReuseIdentifier: "FriendCell")
         loadMessages(roomName: roomName)
-        NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: inputTextView)
-        NotificationCenter.default.addObserver(self, selector: #selector(ChatViewController.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: inputTextView)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        tableView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(keyboardHide(_:))))
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: inputTextView.frame.height, right: 0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,10 +85,8 @@ class ChatViewController: UIViewController {
         let userInfo = notification.userInfo
         let keyboardSize = (userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let duration = userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
-        inputTextView.frame.origin.y = screenSize.height - keyboardSize.height - inputTextView.frame.height
-        
         UIView.animate(withDuration: duration, animations: {
-            self.tableView.contentInset.bottom = keyboardSize.height
+            self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height - self.inputTextView.frame.height, right: 0)
         })
         scrollToRowLastCell(animated: true)
     }
@@ -105,9 +105,12 @@ class ChatViewController: UIViewController {
             let transform = CGAffineTransform(translationX: 0, y: 0)
             self.view.transform = transform
         }
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: inputTextView.frame.height, right: 0)
     }
     
+    @objc private func keyboardHide(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
 }
 
 @available(iOS 15.0, *)
