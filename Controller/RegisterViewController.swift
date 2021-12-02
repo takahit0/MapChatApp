@@ -29,6 +29,10 @@ class RegisterViewController: UIViewController,UINavigationControllerDelegate,UI
         checkModel.checkPermissions()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
     @IBAction func tapProfileImage(_ sender: Any) {
         showAlert()
     }
