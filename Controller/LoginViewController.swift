@@ -24,6 +24,10 @@ class LoginViewController: UIViewController,UIImagePickerControllerDelegate,UINa
         checkModel.checkPermissions()
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
+    }
+    
     @IBAction func determined(_ sender: Any) {
         UserDefaults.standard.removeObject(forKey: "新規or登録済")
         UserDefaults.standard.setValue("登録済", forKey: "新規or登録済")
