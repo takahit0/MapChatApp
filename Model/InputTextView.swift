@@ -5,11 +5,13 @@
 //
 
 import UIKit
+import Foundation
 
 protocol InputTextViewDelegate: class {
     func tappedSendButton(text: String)
 }
 
+@available(iOS 15.0, *)
 class InputTextView: UIView {
     
     @IBOutlet weak var chatTextView: UITextView!
@@ -41,20 +43,26 @@ class InputTextView: UIView {
         chatTextView.text = ""
         sendButton.isEnabled = false
     }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        endEditing(true)
+    }
 }
 
+@available(iOS 15.0, *)
 private extension InputTextView {
     
+    @available(iOS 15.0, *)
     func nibInit() {
         let nib = UINib(nibName: "InputTextView", bundle: nil)
         guard let view = nib.instantiate(withOwner: self, options: nil).first as? UIView else { return }
-        
         view.frame = self.bounds
         view.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         self.addSubview(view)
     }
 }
 
+@available(iOS 15.0, *)
 private extension InputTextView {
     
     private func setupViews() {
@@ -73,6 +81,7 @@ private extension InputTextView {
     }
 }
 
+@available(iOS 15.0, *)
 extension InputTextView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         if textView.text.isEmpty {
