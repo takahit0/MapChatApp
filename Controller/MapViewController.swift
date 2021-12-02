@@ -21,7 +21,7 @@ class MapViewController: UIViewController,CLLocationManagerDelegate,UITextFieldD
     var loadLocationModel = LoadLocationModel()
     let db = Firestore.firestore()
     var location = CGPoint()
-    var name = String()
+    var name:String = ""
     var contents = String()
     var lat = String()
     var lon = String()
@@ -31,9 +31,9 @@ class MapViewController: UIViewController,CLLocationManagerDelegate,UITextFieldD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
         inputText.delegate = self
         mapView.delegate = self
-        self.navigationController?.isNavigationBarHidden = true
         locManager = CLLocationManager()
         locManager.delegate = self
         locManager.startUpdatingLocation()
@@ -55,11 +55,16 @@ class MapViewController: UIViewController,CLLocationManagerDelegate,UITextFieldD
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = true
         loadLocationModel.getPins()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        view.endEditing(true)
     }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -155,26 +160,31 @@ class MapViewController: UIViewController,CLLocationManagerDelegate,UITextFieldD
             mapView.setRegion(region, animated: true)
             let lat = annotation.coordinate.latitude
             let lon = annotation.coordinate.longitude
+            
             let vc = self.storyboard?.instantiateViewController(withIdentifier: "modalVC") as! ModalViewController
             vc.userName = userName
             vc.imageString = imageString
+            vc.delegate = self
             for i in loadLocationModel.pinData{
                 if i.latitude == lat, i.longitude == lon{
                     name = i.roomName
                     vc.name = i.roomName
                     vc.contents = i.roomContents
+                    if let sheet = vc.sheetPresentationController {
+                        sheet.detents = [.medium()]
+                    }
+                    present(vc, animated: true, completion: nil)
                 }
-            }
-            //ハーフモーダルでmodalVCを表示させる
-            if #available(iOS 15.0, *) {
-                if let sheet = vc.sheetPresentationController {
-                    sheet.detents = [.medium()]
-                }
-                self.navigationController?.present(vc, animated: true, completion: nil)
-            } else {
-                print("エラー")
             }
         }
     }
 }
-
+    
+    
+    @available(iOS 15.0, *)
+    extension MapViewController:ModalViewControllerDelegate {
+        func joinChatRoomButtonTapped(_ vc: UIViewController) {
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+    }
+    
