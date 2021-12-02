@@ -2,7 +2,7 @@
 //  SelectViewController.swift
 //  MapChatApp
 //
-//
+//hatti@gmail.com,jyuusan@gmail.com
 
 import UIKit
 
@@ -24,3 +24,4 @@ class SelectViewController: UIViewController {
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
 }
+
