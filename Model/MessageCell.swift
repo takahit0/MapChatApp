@@ -5,6 +5,7 @@
 //
 
 import UIKit
+import Foundation
 
 class MessageCell: UITableViewCell {
 
