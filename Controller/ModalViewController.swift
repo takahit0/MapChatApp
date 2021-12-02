@@ -6,13 +6,17 @@
 
 import UIKit
 
-@available(iOS 15.0, *)
+protocol ModalViewControllerDelegate: class {
+    func joinChatRoomButtonTapped(_ vc:UIViewController)
+}
+
 @available(iOS 15.0, *)
 class ModalViewController: UIViewController {
     
     @IBOutlet weak var chatRoomName: UILabel!
     @IBOutlet weak var chatRoomContents: UILabel!
     
+    weak var delegate:ModalViewControllerDelegate?
     var name = String()
     var contents = String()
     var userName = String()
@@ -29,12 +33,8 @@ class ModalViewController: UIViewController {
         chatVC.roomName = name
         chatVC.userName = userName
         chatVC.userImageString = imageString
-        let transition = CATransition()
-            transition.duration = 0.25
-            transition.type = CATransitionType.push
-            transition.subtype = CATransitionSubtype.fromRight
-            view.window!.layer.add(transition, forKey: kCATransition)
-        present(chatVC, animated: false, completion: nil)
+        dismiss(animated: true, completion: nil)
+        delegate?.joinChatRoomButtonTapped(chatVC)
     }
     
     
