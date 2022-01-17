@@ -114,7 +114,7 @@ class RegisterViewController: UIViewController,UINavigationControllerDelegate,UI
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if info[.originalImage] as? UIImage != nil{
-            let selectedImage = info[.originalImage] as! UIImage
+            let selectedImage = info[.editedImage] as! UIImage
             profileImage.image = selectedImage
             picker.dismiss(animated: true, completion: nil)
         }

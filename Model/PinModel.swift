@@ -11,5 +11,4 @@ struct PinModel {
     let longitude: Double
     let roomName: String
     let roomContents: String
-    
 }

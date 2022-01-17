@@ -35,10 +35,11 @@ class ChatViewController: UIViewController {
         super.viewDidLoad()
         self.navigationController?.isNavigationBarHidden = false
         self.navigationItem.title = roomName
-        self.navigationController?.navigationBar.backgroundColor = .systemGray4
+        self.navigationController?.navigationBar.backgroundColor = .white
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: self.tableView.frame.width, height: self.tableView.frame.height))
         let image = UIImage(named: "talkBackground")
         imageView.image = image
+        imageView.backgroundColor = .white
         imageView.alpha = 0.8
         self.tableView.backgroundView = imageView
         userName = InfoManager.shared.userName
@@ -85,8 +86,14 @@ class ChatViewController: UIViewController {
         let userInfo = notification.userInfo
         let keyboardSize = (userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue
         let duration = userInfo![UIResponder.keyboardAnimationDurationUserInfoKey] as! TimeInterval
+        
+        let defaultKeyboardHeight = inputTextView.frame.height
         UIView.animate(withDuration: duration, animations: {
-            self.tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: keyboardSize.height - self.inputTextView.frame.height, right: 0)
+            if keyboardSize.height > defaultKeyboardHeight {
+                self.tableView.contentInset.bottom = keyboardSize.height - 20
+            } else {
+                self.tableView.contentInset.bottom = keyboardSize.height
+            }
         })
         scrollToRowLastCell(animated: true)
     }
@@ -109,7 +116,7 @@ class ChatViewController: UIViewController {
     }
     
     @objc private func keyboardHide(_ sender: UITapGestureRecognizer) {
-        view.endEditing(true)
+        inputTextView.chatTextView.resignFirstResponder()
     }
 }
 

@@ -8,7 +8,6 @@ import Foundation
 import Firebase
 
 protocol LoadOKDelegate {
-    
     func loadOK(check:Int)
 }
 
@@ -25,14 +24,12 @@ class LoadLocationModel {
             
             self.pinData = []
             
-            
             if error != nil {
                 print(error.debugDescription)
             }else{
                 if let snapDoc = snaps?.documents{
                     for doc in snapDoc {
                         let data = doc.data()
-                        
                         let lat = data["latitude"]! as? NSString
                         let lon = data["longitude"]! as? NSString
                         let roomName = data["roomName"]! as? String
@@ -43,7 +40,6 @@ class LoadLocationModel {
                         self.loadOKDelegate?.loadOK(check: number)
                         number += 1
                         
-                    
                     }
                 }
             }

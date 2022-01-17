@@ -93,7 +93,7 @@ class MapViewController: UIViewController,CLLocationManagerDelegate,UITextFieldD
         print("longitude : " + longitude)
         print("latitude : " + latitude)
         //現在地の更新
-        mapView.setCenter((locations.last?.coordinate)!, animated: true)
+        //mapView.setCenter((locations.last?.coordinate)!, animated: true)
     }
     
     @IBAction func longPressMap(_ sender: UILongPressGestureRecognizer) {

@@ -7,6 +7,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Foundation
 
 @available(iOS 15.0, *)
 @available(iOS 15.0, *)
